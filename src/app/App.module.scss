@@ -1,0 +1,11 @@
+.main {
+  background: url('../assets/BackgroundImage.jpg') fixed 0 0 / cover no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+.container {
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 80px 32px 10px;
+}

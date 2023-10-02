@@ -1,21 +1,19 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import useMockAdapter from "src/api/useMockAdapter";
-import "./index.css";
-import App from "./App";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import useMockAdapter from 'src/api/useMockAdapter';
+import './index.scss';
+import { App } from 'src/app';
 
-const root = ReactDOM.createRoot(
-    document.getElementById("root") as HTMLElement,
-);
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 const RootApp = () => {
-    useMockAdapter();
+  useMockAdapter();
 
-    return <App />;
+  return <App />;
 };
 
 root.render(
-    <React.StrictMode>
-        <RootApp />
-    </React.StrictMode>,
+  <React.StrictMode>
+    <RootApp />
+  </React.StrictMode>
 );

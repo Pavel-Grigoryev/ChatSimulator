@@ -1,0 +1,18 @@
+.main {
+  background: url('../../assets/BackgroundImage.jpg') fixed 0 0 / cover no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+.container {
+  max-width: 664px;
+  margin: 0 auto;
+  padding: 80px 32px 10px;
+}
+
+.loader {
+  position: fixed;
+  top: 30%;
+  text-align: center;
+  width: 100%;
+}

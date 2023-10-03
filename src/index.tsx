@@ -12,8 +12,4 @@ const RootApp = () => {
   return <App />;
 };
 
-root.render(
-  <React.StrictMode>
-    <RootApp />
-  </React.StrictMode>
-);
+root.render(<RootApp />);

@@ -1,0 +1,1 @@
+export { TotalActivities } from './TotalActivities';

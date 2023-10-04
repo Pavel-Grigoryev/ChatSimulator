@@ -27,6 +27,7 @@ export const Main = () => {
       </div>
     );
   }
+  // debugger;
   return (
     <main className={s.main}>
       {status === 'loading' && <LinearProgress color="secondary" sx={linProgressSX} />}

@@ -1,11 +1,19 @@
 import React from 'react';
-import { selectLikesSum } from 'src/features/comments/comments-selectors';
-import { useAppDispatch } from 'src/common/hooks/useAppDispatch';
 import { commentsSelectors } from 'src/features/comments/index';
 import { useAppSelector } from 'src/common/hooks/useAppSelector';
+import { getFinalCommentText } from 'src/common/utils';
+import s from './TotalActivities.module.scss';
 
 export const TotalActivities = () => {
   const likesSum = useAppSelector(commentsSelectors.selectLikesSum);
+  const commentsSum = useAppSelector(commentsSelectors.selectCommentsSum);
 
-  return <div>{likesSum}</div>;
+  const commentText = getFinalCommentText(commentsSum);
+
+  return (
+    <div className={s.activBlock}>
+      <div>{commentText}</div>
+      <div className={s.likes}>{likesSum}</div>
+    </div>
+  );
 };

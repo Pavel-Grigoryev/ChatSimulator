@@ -12,9 +12,11 @@ export type CommentData = {
   created: string;
   text: string;
   author: number;
-  parent: number;
+  parent: number | null;
   likes: number;
 };
+
+export type CommentDataSlice = CommentData & { isLiked: boolean };
 
 export type AuthorsData = {
   id: number;

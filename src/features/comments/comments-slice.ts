@@ -1,7 +1,7 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import getCommentsRequest from 'src/api/comments/getCommentsRequest';
 import { createAppAsyncThunk } from 'src/common/utils/create-app-async-thunk';
-import { AuthorsData, CommentData } from 'src/common/types/types';
+import { AuthorsData, CommentData, CommentDataSlice } from 'src/common/types/types';
 import { START_PAGE } from 'src/common/constants';
 import dayjs from 'dayjs';
 import getAuthorsRequest from 'src/api/authors/getAuthorsRequest';
@@ -14,7 +14,6 @@ const fetchComments = createAppAsyncThunk<
   { page: number }
 >('comments/fetchComments', async (param) => {
   const res = await getCommentsRequest(param.page);
-
   return {
     comments: res.data,
     pageSize: res.pagination.size,
@@ -64,18 +63,23 @@ export const slice = createSlice({
   initialState: {
     page: START_PAGE,
     currentPage: START_PAGE,
-    renderedComment: 0,
     pageSize: null as null | number,
     totalPages: null as null | number,
-    comments: [] as CommentData[],
+    comments: [] as CommentDataSlice[],
     authors: [] as AuthorsData[],
   },
   reducers: {
-    addRenderedComment(state) {
-      state.renderedComment += 1;
-    },
     setCurrentPage(state) {
       state.currentPage += 1;
+    },
+    setIsLiked(state, action: PayloadAction<{ id: number }>) {
+      const index = state.comments.findIndex((com) => com.id === action.payload.id);
+      state.comments[index].isLiked = !state.comments[index].isLiked;
+      if (state.comments[index].isLiked) {
+        state.comments[index].likes += 1;
+      } else {
+        state.comments[index].likes -= 1;
+      }
     },
   },
   extraReducers: (builder) => {
@@ -92,13 +96,14 @@ export const slice = createSlice({
           const parentB = b.parent || 0;
           return parentA - parentB;
         });
+        const arrComments = sortedComments.map((comm) => ({ ...comm, isLiked: false }));
+        state.totalPages = action.payload.totalPages;
         if (state.pageSize) {
-          state.comments = [...state.comments, ...sortedComments];
+          state.comments = [...state.comments, ...arrComments];
           state.page = action.payload.page;
         } else {
-          state.comments = sortedComments;
+          state.comments = arrComments;
           state.pageSize = action.payload.pageSize;
-          state.totalPages = action.payload.totalPages;
         }
       })
       .addCase(fetchAuthors.fulfilled, (state, action) => {
@@ -109,3 +114,6 @@ export const slice = createSlice({
 
 // Actions
 export const asyncCommentsActions = { fetchComments, fetchAuthors, fetchCurrentPage };
+
+// Types
+export type InitialCommentsState = ReturnType<typeof slice.getInitialState>;

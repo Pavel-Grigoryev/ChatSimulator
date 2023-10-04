@@ -1,4 +1,4 @@
-export const returnFinalCommentDateText = (
+export const getFinalCommentDateText = (
   diffHours: number,
   hoursLimit: number,
   formattedDate: string
@@ -6,7 +6,7 @@ export const returnFinalCommentDateText = (
   if (diffHours > hoursLimit) {
     return formattedDate;
   }
-  if (diffHours === 1) {
+  if (diffHours === 1 || diffHours % 10 === 1) {
     return `${diffHours} час назад`;
   }
   if (diffHours > 1 && diffHours < 5) {

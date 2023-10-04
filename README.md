@@ -1,24 +1,22 @@
-# Тестовое задание
+## Chat Simulator
 
-1. Репозиторий не форкать
-2. Выполненное задание загрузить на GitHub (GitHub Pages)
+Chat simulator with the output of pages with comments and the ability to like comments.
 
-## Задачи:
+## Stack:
 
-1. Вывести на экран комментарии, соблюдая их вложенность и пагинацию, используя запросы из `src/api`
-2. Посчитать сумму лайков и комментариев
-3. Добавить возможность лайкать комментарии
+- [React](https://reactjs.org/)
+- [Redux-toolkit](https://redux-toolkit.js.org/)
+- [Typescript](https://www.typescriptlang.org/)
+- [Axios](https://www.npmjs.com/package/axios)
+- [MaterialUI](https://mui.com/)
 
-## Нельзя:
+## Setup
 
-1. Модифицировать папку `src/api`
-2. Менять содержимое возвращаемых данных в `src/data`
-3. Модифицировать файл `src/index.tsx`
+1. Clone repository:  
+   `git clone https://github.com/Pavel-Grigoryev/techicalTask`
+2. Initial build of the project:  
+   `yarn` The command will build all dependencies from package.js
+3. Runs the app in the development mode  
+   `yarn start`
+   Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Что не запрещено - то разрешено
-
-## Дизайн:
-
-### Figma [Comments.fig](Comments.fig)
-
-![preview.png](preview.png)

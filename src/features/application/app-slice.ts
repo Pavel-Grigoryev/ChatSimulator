@@ -18,7 +18,7 @@ export const initializeApp = createAppAsyncThunk<void, undefined>(
 export const slice = createSlice({
   name: 'app',
   initialState: {
-    status: 'idle' as RequestStatus,
+    status: 'loading' as RequestStatus,
     error: null as null | string,
     isInitialized: false,
   },
@@ -35,12 +35,18 @@ export const slice = createSlice({
       .addCase(initializeApp.fulfilled, (state) => {
         state.isInitialized = true;
       })
-      .addMatcher(isPending, (state) => {
-        state.status = 'loading';
-      })
-      .addMatcher(isFulfilled, (state) => {
-        state.status = 'succeeded';
-      })
+      .addMatcher(
+        isPending(commentsActions.fetchComments, commentsActions.fetchAuthors),
+        (state) => {
+          state.status = 'loading';
+        }
+      )
+      .addMatcher(
+        isFulfilled(commentsActions.fetchComments, commentsActions.fetchAuthors),
+        (state) => {
+          state.status = 'succeeded';
+        }
+      )
       .addMatcher(isRejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'Some error occurred';
@@ -51,3 +57,4 @@ export const slice = createSlice({
 // Actions
 
 export const appAsyncActions = { initializeApp };
+export type InitialAppState = ReturnType<typeof slice.getInitialState>;

@@ -1,6 +1,7 @@
 {
   "name": "technical_task",
   "version": "0.1.0",
+  "homepage": "https://Pavel-Grigoryev.github.io/techicalTask",
   "private": true,
   "scripts": {
     "start": "react-scripts start",

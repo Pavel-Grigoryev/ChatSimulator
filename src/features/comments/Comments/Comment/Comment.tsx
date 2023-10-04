@@ -1,61 +1,37 @@
-import React, { FC, useEffect, useState } from 'react';
-import { CommentData } from 'src/common/types';
-import dayjs from 'dayjs';
-import 'dayjs/locale/ru';
-import localizedFormat from 'dayjs/plugin/localizedFormat';
-import { returnFinalCommentDateText } from 'src/common/utils/returnFinalCommentDateText';
+import React, { FC, useCallback } from 'react';
+import { CommentDataSlice } from 'src/common/types';
 import { SHOW_FULL_DATE_AFTER } from 'src/common/constants';
 import { Author } from 'src/features/comments/Comments/Comment/Author';
-import { useAppSelector } from 'src/common/hooks/useAppSelector';
-import { commentsActions, commentsSelectors } from 'src/features/comments/index';
 import cn from 'classnames';
+import { useFormatDate } from 'src/features/comments/Comments/Comment/hooks';
+import { Likes } from 'src/features/comments/Comments/Comment/Likes';
 import { useActions } from 'src/common/hooks/useActions';
+import { commentsActions } from 'src/features/comments/index';
 import s from './Comment.module.scss';
 
-dayjs.extend(localizedFormat);
-
 type Props = {
-  comment: CommentData;
-  numberOfComments: number;
+  comment: CommentDataSlice;
 };
 
-export const Comment: FC<Props> = ({ comment, numberOfComments }) => {
-  const { addRenderedComment } = useActions(commentsActions);
+export const Comment: FC<Props> = ({ comment }) => {
+  const finalCommentDate = useFormatDate(comment.created, SHOW_FULL_DATE_AFTER);
 
-  const renderedComment = useAppSelector(commentsSelectors.selectRenderedComment);
+  const { setIsLiked } = useActions(commentsActions);
 
-  const commentDate = dayjs(comment.created);
-  dayjs.locale('ru');
-  const dateNow = dayjs();
-
-  const diffHours = dateNow.diff(commentDate, 'h');
-  const formattedDate = commentDate.format('DD.MM.YYYY. HH:mm:ss');
-
-  const finalCommentDate = returnFinalCommentDateText(
-    diffHours,
-    SHOW_FULL_DATE_AFTER,
-    formattedDate
-  );
-
-  const nestedComments = useAppSelector(commentsSelectors.selectNestedComments);
-  const nestedComment = nestedComments.find((comm) => comm.parent === comment.id);
-
-  useEffect(() => {
-    addRenderedComment();
+  const onclickHandler = useCallback(() => {
+    setIsLiked({ id: comment.id });
   }, []);
 
   return (
-    <div className={cn(s.nestedBlock, { [s.notFirstBlock]: comment.parent })}>
-      <Author authorId={comment.author} />
-      <div>{finalCommentDate}</div>
+    <li className={cn(s.commentBlock, { [s.notFirstBlock]: comment.parent })}>
+      <div className={s.authorWrapper}>
+        <Author authorId={comment.author} />
+      </div>
+      <p className={s.date}>{finalCommentDate}</p>
       <p>{comment.text}</p>
-      <p>{comment.likes}</p>
-
-      {/* {nestedComment && ( */}
-      {/*  <div className={cn(s.nestedBlock, { [s.notFirstBlock]: !comment.parent })}> */}
-      {/*    <Comment comment={nestedComment} numberOfComments={numberOfComments} /> */}
-      {/*  </div> */}
-      {/* )} */}
-    </div>
+      <div className={s.likesBlock}>
+        <Likes likes={comment.likes} isLiked={comment.isLiked} onclickHandler={onclickHandler} />
+      </div>
+    </li>
   );
 };

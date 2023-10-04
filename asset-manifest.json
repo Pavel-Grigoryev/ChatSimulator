@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/techicalTask/static/css/main.88e8f8ac.css",
+    "main.js": "/techicalTask/static/js/main.087f96c9.js",
+    "static/media/han-solo.jpg": "/techicalTask/static/media/han-solo.84705bac66e252072c67.jpg",
+    "static/media/BackgroundImage.jpg": "/techicalTask/static/media/BackgroundImage.7bcd863e54ab793bb7ad.jpg",
+    "index.html": "/techicalTask/index.html",
+    "main.88e8f8ac.css.map": "/techicalTask/static/css/main.88e8f8ac.css.map",
+    "main.087f96c9.js.map": "/techicalTask/static/js/main.087f96c9.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.88e8f8ac.css",
+    "static/js/main.087f96c9.js"
+  ]
+}
